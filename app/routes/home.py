@@ -3,12 +3,12 @@ from flask import Blueprint, render_template
 bp = Blueprint("home", __name__, url_prefix="/")
 
 @bp.route("/")
-def index()
+def index():
   return render_template("homepage.html")
 
 @bp.route("/login")
 def login():
-  retunr render_template("login.html")
+  return render_template("login.html")
 
 @bp.route("/post/<id>")
 def single(id):
