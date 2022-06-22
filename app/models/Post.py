@@ -11,3 +11,15 @@ class Post(Base):
   user_id = Column(Integer, ForeignKey("users.id"))
   created_at = Column(DateTime, default=datetime.now)
   updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+  user = relationship("User")
+
+  # Query will appear as follows
+  # {
+  # "id": 1,
+  # "title": "How to Learn Python",
+  # "user_id": 2,
+  # "user": {
+  #   "id": 2,
+  #   "username": "lernantino"
+  # }
+  # }
