@@ -12,14 +12,28 @@ class Post(Base):
   created_at = Column(DateTime, default=datetime.now)
   updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
   user = relationship("User")
+  #deleting a post will delete all associated comments
+  comments = relationship("Comment", cascade="all,delete")
 
   # Query will appear as follows
   # {
-  # "id": 1,
-  # "title": "How to Learn Python",
-  # "user_id": 2,
-  # "user": {
-  #   "id": 2,
-  #   "username": "lernantino"
-  # }
-  # }
+  #   "id": 1,
+  #   "title": "How to Learn Python",
+  #   "user_id": 2,
+  #   "user": {
+  #     "id": 2,
+  #     "username": "lernantino"
+  #  },
+  #  "comments": [
+  #    {
+  #      "id": 1,
+  #      "comment_text": "Great article!",
+  #      "post_id": 1,
+  #      "user_id": 3,
+  #      "user": {
+  #        "id": 3,
+  #        "username": "someone_else" // comment author
+  #      }
+  #     }
+  #    ]
+  #  }
