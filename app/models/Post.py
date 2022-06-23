@@ -1,5 +1,6 @@
 from datetime import datetime
 from app.db import Base
+from .Vote import Vote
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
@@ -14,6 +15,12 @@ class Post(Base):
   user = relationship("User")
   #deleting a post will delete all associated comments
   comments = relationship("Comment", cascade="all,delete")
+  votes = relationship("Vote", cascade="all,delete")
+  vote_count = column_property(
+      select([func.count(Vote.id)]).where(Vote.post_id == id)
+  )
+  #above dynamic property same as following SQL query 
+  #SELECT COUNT(votes.id) AS vote_count FROM votes WHERE votes.post_id = 1;
 
   # Query will appear as follows
   # {
