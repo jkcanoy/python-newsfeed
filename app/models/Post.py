@@ -1,8 +1,8 @@
 from datetime import datetime
 from app.db import Base
 from .Vote import Vote
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, select, func
+from sqlalchemy.orm import relationship, column_property
 
 class Post(Base):
   __tablename__ = "posts"
@@ -17,7 +17,7 @@ class Post(Base):
   comments = relationship("Comment", cascade="all,delete")
   votes = relationship("Vote", cascade="all,delete")
   vote_count = column_property(
-      select([func.count(Vote.id)]).where(Vote.post_id == id)
+    select([func.count(Vote.id)]).where(Vote.post_id == id)
   )
   #above dynamic property same as following SQL query 
   #SELECT COUNT(votes.id) AS vote_count FROM votes WHERE votes.post_id = 1;
