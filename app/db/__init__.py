@@ -16,8 +16,8 @@ def init_db():
   Base.metadata.create_all(engine)
 
 def get_db():
-  if "db" not in g:
+  if 'db' not in g:
     # store db connection in app context
     g.db = Session()
 
-  return g.db()
+  return g.db
