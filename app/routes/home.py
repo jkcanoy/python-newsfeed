@@ -8,12 +8,7 @@ bp = Blueprint("home", __name__, url_prefix="/")
 def index():
   # get all posts
   db = get_db()
-  posts = (
-    db
-      .query(Post).
-      order_by(Post.created_at.desc()).
-      all()
-  )    
+  posts = db.query(Post).order_by(Post.created_at.desc()).all()    
 
   return render_template(
     "homepage.html",
@@ -26,4 +21,12 @@ def login():
 
 @bp.route("/post/<id>")
 def single(id):
-  return render_template("single-post.html")
+  # get single post by id
+  db = get_db()
+  post = db.query(Post).filter(Post.id == id).one()
+
+  # render single post template
+  return render_template(
+    "single-post.html",
+    post=post
+  )
